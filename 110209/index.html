@@ -15,6 +15,17 @@
             box-sizing: border-box;
         }
 
+        /* Remove blue highlight on click */
+        *,
+        *:focus,
+        *:active {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            outline: none;
+        }
+
         body {
             background: #0a0a0a;
             color: #fff;
@@ -48,6 +59,7 @@
             height: 100%;
             display: block;
             background: #000;
+            pointer-events: none;
         }
 
         /* ============================================
@@ -130,6 +142,11 @@
             opacity: 0;
             transition: opacity 0.25s ease;
             z-index: 20;
+            pointer-events: none;
+        }
+
+        .controls-overlay * {
+            pointer-events: auto;
         }
 
         .video-wrapper:hover .controls-overlay,
@@ -149,6 +166,7 @@
             position: relative;
             margin-bottom: 10px;
             transition: height 0.15s;
+            pointer-events: auto;
         }
 
         .progress-container:hover {
@@ -182,7 +200,7 @@
         }
 
         /* ============================================
-                   CONTROLS ROW
+                   CONTROLS ROW (Simplified)
                    ============================================ */
         .controls-row {
             display: flex;
@@ -204,6 +222,7 @@
             align-items: center;
             justify-content: center;
             opacity: 0.9;
+            pointer-events: auto;
         }
 
         .controls-row button:hover {
@@ -217,6 +236,7 @@
             font-variant-numeric: tabular-nums;
             min-width: 100px;
             letter-spacing: 0.3px;
+            pointer-events: none;
         }
 
         .controls-row .volume-wrap {
@@ -234,6 +254,7 @@
             border-radius: 4px;
             outline: none;
             transition: width 0.2s;
+            pointer-events: auto;
         }
 
         .controls-row .volume-wrap:hover input[type="range"] {
@@ -257,27 +278,6 @@
             border-radius: 50%;
             cursor: pointer;
             border: none;
-        }
-
-        .controls-row .speed-select {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            cursor: pointer;
-            outline: none;
-            font-family: inherit;
-        }
-
-        .controls-row .speed-select:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .controls-row .speed-select option {
-            background: #1a1a1a;
-            color: #fff;
         }
 
         .controls-row .spacer {
@@ -326,6 +326,7 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            pointer-events: none;
         }
 
         /* ============================================
@@ -387,11 +388,6 @@
         }
 
         @media (max-width: 480px) {
-            .controls-row .speed-select {
-                font-size: 11px;
-                padding: 2px 5px;
-            }
-
             .video-title {
                 font-size: 15px;
             }
@@ -436,16 +432,6 @@
                         <i class="fas fa-play"></i>
                     </button>
 
-                    <!-- Rewind 10s -->
-                    <button id="rewindBtn" title="Rewind 10s">
-                        <i class="fas fa-backward"></i>
-                    </button>
-
-                    <!-- Forward 10s -->
-                    <button id="forwardBtn" title="Forward 10s">
-                        <i class="fas fa-forward"></i>
-                    </button>
-
                     <!-- Time Display -->
                     <span class="time" id="timeDisplay">0:00 / 0:00</span>
 
@@ -456,16 +442,6 @@
                         </button>
                         <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" />
                     </div>
-
-                    <!-- Speed -->
-                    <select class="speed-select" id="speedSelect">
-                        <option value="0.5">0.5x</option>
-                        <option value="0.75">0.75x</option>
-                        <option value="1" selected>1x</option>
-                        <option value="1.25">1.25x</option>
-                        <option value="1.5">1.5x</option>
-                        <option value="2">2x</option>
-                    </select>
 
                     <span class="spacer"></span>
 
@@ -518,12 +494,9 @@
             const progressContainer = document.getElementById('progressContainer');
             const playBtn = document.getElementById('playBtn');
             const bigPlayBtn = document.getElementById('bigPlayBtn');
-            const rewindBtn = document.getElementById('rewindBtn');
-            const forwardBtn = document.getElementById('forwardBtn');
             const timeDisplay = document.getElementById('timeDisplay');
             const muteBtn = document.getElementById('muteBtn');
             const volumeSlider = document.getElementById('volumeSlider');
-            const speedSelect = document.getElementById('speedSelect');
             const fullscreenBtn = document.getElementById('fullscreenBtn');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const controlsOverlay = document.getElementById('controlsOverlay');
@@ -612,17 +585,6 @@
                 } else {
                     video.pause();
                 }
-            });
-
-            // ==========================================
-            // REWIND / FORWARD (10s)
-            // ==========================================
-            rewindBtn.addEventListener('click', () => {
-                video.currentTime = Math.max(0, video.currentTime - 10);
-            });
-
-            forwardBtn.addEventListener('click', () => {
-                video.currentTime = Math.min(video.duration, video.currentTime + 10);
             });
 
             // ==========================================
@@ -716,13 +678,6 @@
             }
 
             // ==========================================
-            // SPEED
-            // ==========================================
-            speedSelect.addEventListener('change', () => {
-                video.playbackRate = parseFloat(speedSelect.value);
-            });
-
-            // ==========================================
             // FULLSCREEN
             // ==========================================
             fullscreenBtn.addEventListener('click', () => {
@@ -734,21 +689,13 @@
             });
 
             // ==========================================
-            // KEYBOARD SHORTCUTS
+            // KEYBOARD SHORTCUTS (Simplified)
             // ==========================================
             document.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Space') {
                     e.preventDefault();
                     if (video.paused) video.play();
                     else video.pause();
-                }
-                if (e.key === 'ArrowRight') {
-                    e.preventDefault();
-                    video.currentTime = Math.min(video.duration, video.currentTime + 10);
-                }
-                if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    video.currentTime = Math.max(0, video.currentTime - 10);
                 }
                 if (e.key === 'f' || e.key === 'F') {
                     e.preventDefault();
