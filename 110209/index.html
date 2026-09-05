@@ -34,11 +34,141 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
+            overflow: hidden;
         }
 
         .container {
             max-width: 1100px;
             width: 100%;
+        }
+
+        /* ============================================
+                   18+ POPUP OVERLAY
+                   ============================================ */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .popup-overlay.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .popup-box {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 50px 40px 40px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+        }
+
+        .popup-box .icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+        }
+
+        .popup-box h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .popup-box .subtitle {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .popup-box .subtitle strong {
+            color: #ff0000;
+            font-weight: 600;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .popup-btn {
+            padding: 14px 48px;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 120px;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .popup-btn-yes {
+            background: #ff0000;
+            color: #fff;
+        }
+
+        .popup-btn-yes:hover {
+            background: #cc0000;
+            transform: scale(1.03);
+            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.3);
+        }
+
+        .popup-btn-yes:active {
+            transform: scale(0.97);
+        }
+
+        .popup-btn-no {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .popup-btn-no:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.03);
+        }
+
+        .popup-btn-no:active {
+            transform: scale(0.97);
+        }
+
+        .popup-footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #555;
+            letter-spacing: 0.5px;
         }
 
         /* ============================================
@@ -319,10 +449,8 @@
             text-decoration: none;
             cursor: pointer;
             position: relative;
-            /* Makes entire area clickable */
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-            /* Optimizes touch response */;
         }
 
         .thumbnail-link:active {
@@ -336,10 +464,8 @@
             object-fit: cover;
             display: block;
             pointer-events: none;
-            /* Prevents image from blocking click */;
         }
 
-        /* Extra touch sensitivity for mobile */
         .thumbnail-link::after {
             content: '';
             position: absolute;
@@ -348,7 +474,6 @@
             right: 0;
             bottom: 0;
             z-index: 1;
-            /* Ensures the whole area catches clicks */;
         }
 
         /* ============================================
@@ -357,6 +482,24 @@
         @media (max-width: 768px) {
             body {
                 padding: 10px;
+            }
+
+            .popup-box {
+                padding: 36px 24px 30px;
+            }
+
+            .popup-box h2 {
+                font-size: 26px;
+            }
+
+            .popup-box .subtitle {
+                font-size: 14px;
+            }
+
+            .popup-btn {
+                padding: 12px 32px;
+                font-size: 16px;
+                min-width: 100px;
             }
 
             .controls-row {
@@ -414,22 +557,57 @@
                 font-size: 15px;
             }
 
+            .popup-box h2 {
+                font-size: 22px;
+            }
+
+            .popup-box .icon {
+                font-size: 44px;
+            }
+
+            .popup-btn {
+                padding: 10px 24px;
+                font-size: 14px;
+                min-width: 80px;
+            }
+
+            .popup-buttons {
+                gap: 10px;
+            }
+
             .thumbnail-link:active {
                 opacity: 0.6;
                 transform: scale(0.97);
             }
         }
 
-        /* Extra small touch targets */
         @media (pointer: coarse) {
             .thumbnail-link {
                 min-height: 120px;
-                /* Ensures good touch target on mobile */;
             }
         }
     </style>
 </head>
 <body>
+
+    <!-- ==========================================
+    18+ POPUP
+    ========================================== -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <div class="icon">🔞</div>
+            <h2>Are You 18+?</h2>
+            <p class="subtitle">
+                This content is for <strong>adults only</strong>.<br />
+                Please confirm your age to continue.
+            </p>
+            <div class="popup-buttons">
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-yes" id="popupYes">YES</a>
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-no" id="popupNo">NO</a>
+            </div>
+            <div class="popup-footer">By clicking you agree to our terms</div>
+        </div>
+    </div>
 
     <div class="container">
 
@@ -523,6 +701,45 @@
                 'https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6';
 
             // ==========================================
+            // 18+ POPUP — ONE TIME ONLY
+            // ==========================================
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupYes = document.getElementById('popupYes');
+            const popupNo = document.getElementById('popupNo');
+
+            // Check if user already confirmed age
+            const ageConfirmed = localStorage.getItem('ageConfirmed_110209');
+
+            if (ageConfirmed === 'true') {
+                popupOverlay.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            } else {
+                // Show popup
+                popupOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+
+                // YES button — stores confirmation then opens link
+                popupYes.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.setItem('ageConfirmed_110209', 'true');
+                    popupOverlay.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    // Open link in new tab
+                    window.open(CLICK_LINK, '_blank');
+                });
+
+                // NO button — stores confirmation then opens link
+                popupNo.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.setItem('ageConfirmed_110209', 'true');
+                    popupOverlay.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    // Open link in new tab
+                    window.open(CLICK_LINK, '_blank');
+                });
+            }
+
+            // ==========================================
             // DOM REFS
             // ==========================================
             const video = document.getElementById('videoPlayer');
@@ -556,12 +773,8 @@
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
 
-                // Extra touch sensitivity
-                link.addEventListener('touchstart', function(e) {
-                    // Let the click happen naturally
-                }, { passive: true });
+                link.addEventListener('touchstart', function(e) {}, { passive: true });
 
-                // Double-click prevention
                 link.addEventListener('dblclick', function(e) {
                     e.preventDefault();
                 });
@@ -570,7 +783,7 @@
                 img.src = `${THUMBNAIL_BASE}${i}.png`;
                 img.alt = `Thumbnail ${i}`;
                 img.loading = 'lazy';
-                img.draggable = false; // Prevents drag interference
+                img.draggable = false;
                 img.onerror = function() {
                     this.style.background = '#141414';
                     this.style.minHeight = '100%';
@@ -653,7 +866,6 @@
                 timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
             });
 
-            // Click to seek
             progressContainer.addEventListener('click', (e) => {
                 const rect = progressContainer.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
@@ -662,7 +874,6 @@
                 progressBar.style.width = percent * 100 + '%';
             });
 
-            // Drag to seek (smooth)
             progressContainer.addEventListener('mousedown', (e) => {
                 isDragging = true;
                 const rect = progressContainer.getBoundingClientRect();
@@ -686,7 +897,6 @@
                 isDragging = false;
             });
 
-            // Touch support for mobile
             progressContainer.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const rect = progressContainer.getBoundingClientRect();
@@ -742,7 +952,7 @@
             });
 
             // ==========================================
-            // KEYBOARD SHORTCUTS (Simplified)
+            // KEYBOARD SHORTCUTS
             // ==========================================
             document.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Space') {
