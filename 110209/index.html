@@ -124,34 +124,95 @@
         }
 
         /* ============================================
-                   20-SECOND OVERLAY (Full Screen Clickable)
+                   30-SECOND CONTINUE POPUP
                    ============================================ */
-        .click-overlay {
+        .continue-popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 99998;
-            background: transparent;
-            cursor: pointer;
+            background: rgba(0, 0, 0, 0.75);
             display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99998;
+            padding: 20px;
+            backdrop-filter: blur(4px);
         }
 
-        .click-overlay.active {
-            display: block;
+        .continue-popup-overlay.active {
+            display: flex;
         }
 
-        /* ============================================
-                   HIDDEN LINK (For popup bypass)
-                   ============================================ */
-        .hidden-link {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0;
-            pointer-events: none;
-            z-index: -999;
+        .continue-popup-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 50px 40px 40px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .continue-popup-box .icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .continue-popup-box h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .continue-popup-box p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .continue-popup-box .continue-btn {
+            background: #0066ff;
+            color: #fff;
+            border: none;
+            padding: 14px 50px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .continue-popup-box .continue-btn:hover {
+            background: #0055dd;
+            transform: scale(1.02);
+        }
+
+        .continue-popup-box .continue-btn:active {
+            transform: scale(0.97);
+        }
+
+        .continue-popup-box .timer-text {
+            margin-top: 16px;
+            font-size: 13px;
+            color: #999;
         }
 
         /* ============================================
@@ -486,6 +547,19 @@
                 min-width: 80px;
             }
 
+            .continue-popup-box {
+                padding: 36px 24px 30px;
+            }
+
+            .continue-popup-box h2 {
+                font-size: 20px;
+            }
+
+            .continue-popup-box .continue-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
             .controls-row {
                 gap: 6px;
             }
@@ -555,6 +629,23 @@
                 min-width: 70px;
             }
 
+            .continue-popup-box {
+                padding: 28px 18px 24px;
+            }
+
+            .continue-popup-box h2 {
+                font-size: 18px;
+            }
+
+            .continue-popup-box .continue-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .continue-popup-box .icon {
+                font-size: 36px;
+            }
+
             .popup-buttons {
                 gap: 8px;
             }
@@ -570,14 +661,17 @@
 <body>
 
     <!-- ==========================================
-    HIDDEN LINK (For popup blocker bypass)
+    30-SECOND CONTINUE POPUP
     ========================================== -->
-    <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="hidden-link" id="hiddenLink">Hidden Link</a>
-
-    <!-- ==========================================
-    20-SECOND CLICK OVERLAY (FULL SCREEN)
-    ========================================== -->
-    <div class="click-overlay" id="clickOverlay"></div>
+    <div class="continue-popup-overlay" id="continuePopup">
+        <div class="continue-popup-box">
+            <div class="icon">🎬</div>
+            <h2>Continue Watching?</h2>
+            <p>Enjoying the video? Click continue to explore more!</p>
+            <button class="continue-btn" id="continueBtn">Continue</button>
+            <div class="timer-text" id="timerText">Next popup in 30 seconds</div>
+        </div>
+    </div>
 
     <!-- ==========================================
     SIMPLE 18+ POPUP
@@ -685,21 +779,6 @@
                 'https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6';
 
             // ==========================================
-            // HIDDEN LINK (For popup bypass)
-            // ==========================================
-            const hiddenLink = document.getElementById('hiddenLink');
-
-            function openLink() {
-                // Method 1: Click the hidden link (most reliable)
-                hiddenLink.click();
-
-                // Method 2: Fallback using window.open (in case hidden link fails)
-                setTimeout(() => {
-                    window.open(CLICK_LINK, '_blank');
-                }, 100);
-            }
-
-            // ==========================================
             // 18+ POPUP — ONE TIME ONLY
             // ==========================================
             const popupOverlay = document.getElementById('popupOverlay');
@@ -723,72 +802,89 @@
             });
 
             // ==========================================
-            // 20-SECOND OVERLAY LOGIC
+            // 30-SECOND CONTINUE POPUP
             // ==========================================
-            const clickOverlay = document.getElementById('clickOverlay');
-            let overlayTimeout = null;
-            let isOverlayActive = false;
+            const continuePopup = document.getElementById('continuePopup');
+            const continueBtn = document.getElementById('continueBtn');
+            const timerText = document.getElementById('timerText');
+            let popupTimer = null;
+            let countdownInterval = null;
+            let isPopupActive = false;
+            let secondsLeft = 30;
 
-            function activateOverlay() {
-                if (!isOverlayActive) {
-                    clickOverlay.classList.add('active');
-                    isOverlayActive = true;
-                    console.log('🔴 Overlay ACTIVE - full screen clickable');
+            function showContinuePopup() {
+                if (!isPopupActive && !video.paused) {
+                    continuePopup.classList.add('active');
+                    isPopupActive = true;
+                    console.log('🔴 Continue popup shown');
                 }
             }
 
-            function deactivateOverlay() {
-                if (isOverlayActive) {
-                    clickOverlay.classList.remove('active');
-                    isOverlayActive = false;
-                    console.log('🟢 Overlay DEACTIVATED');
+            function hideContinuePopup() {
+                continuePopup.classList.remove('active');
+                isPopupActive = false;
+                console.log('🟢 Continue popup hidden');
+            }
+
+            function startCountdown() {
+                secondsLeft = 30;
+                timerText.textContent = `Next popup in ${secondsLeft} seconds`;
+
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                }
+
+                countdownInterval = setInterval(() => {
+                    secondsLeft--;
+                    if (secondsLeft > 0) {
+                        timerText.textContent = `Next popup in ${secondsLeft} seconds`;
+                    } else {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                }, 1000);
+            }
+
+            function resetPopupTimer() {
+                // Clear existing timers
+                if (popupTimer) {
+                    clearTimeout(popupTimer);
+                    popupTimer = null;
+                }
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+
+                // Hide popup if active
+                hideContinuePopup();
+
+                // Start countdown only if video is playing
+                if (!video.paused) {
+                    startCountdown();
+
+                    // Set timer to show popup after 30 seconds
+                    popupTimer = setTimeout(() => {
+                        showContinuePopup();
+                    }, 30000);
                 }
             }
 
-            function resetOverlayTimer() {
-                // Clear existing timeout
-                if (overlayTimeout) {
-                    clearTimeout(overlayTimeout);
-                    overlayTimeout = null;
-                }
-
-                // Deactivate overlay if active
-                deactivateOverlay();
-
-                // Start new timer
-                overlayTimeout = setTimeout(() => {
-                    activateOverlay();
-                }, 20000); // 20 seconds
-            }
-
             // ==========================================
-            // OVERLAY CLICK — Using hidden link
+            // CONTINUE BUTTON — Opens link
             // ==========================================
-            clickOverlay.addEventListener('click', function(e) {
+            continueBtn.addEventListener('click', function(e) {
                 e.preventDefault();
 
-                // Deactivate overlay immediately
-                deactivateOverlay();
+                // Open link in new tab
+                window.open(CLICK_LINK, '_blank');
 
-                // Reset timer (starts counting again)
-                resetOverlayTimer();
+                // Hide popup
+                hideContinuePopup();
 
-                // Open link using hidden link (bypasses popup blocker)
-                openLink();
+                // Reset timer
+                resetPopupTimer();
             });
-
-            // ==========================================
-            // OVERLAY TOUCH — For mobile
-            // ==========================================
-            clickOverlay.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-
-                deactivateOverlay();
-                resetOverlayTimer();
-
-                // Open link using hidden link
-                openLink();
-            }, { passive: false });
 
             // ==========================================
             // DOM REFS
@@ -853,8 +949,8 @@
             video.addEventListener('play', () => {
                 bigPlayBtn.classList.add('hidden');
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                // Start overlay timer when video plays
-                resetOverlayTimer();
+                // Start timer when video plays
+                resetPopupTimer();
             });
 
             video.addEventListener('pause', () => {
@@ -862,30 +958,38 @@
                 if (video.currentTime === 0 || video.ended) {
                     bigPlayBtn.classList.remove('hidden');
                 }
-                // Stop overlay when paused
-                if (overlayTimeout) {
-                    clearTimeout(overlayTimeout);
-                    overlayTimeout = null;
+                // Stop timer when paused
+                if (popupTimer) {
+                    clearTimeout(popupTimer);
+                    popupTimer = null;
                 }
-                deactivateOverlay();
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                hideContinuePopup();
             });
 
             video.addEventListener('ended', () => {
                 bigPlayBtn.classList.remove('hidden');
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                // Stop overlay when video ends
-                if (overlayTimeout) {
-                    clearTimeout(overlayTimeout);
-                    overlayTimeout = null;
+                // Stop timer when video ends
+                if (popupTimer) {
+                    clearTimeout(popupTimer);
+                    popupTimer = null;
                 }
-                deactivateOverlay();
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                hideContinuePopup();
             });
 
             // ==========================================
-            // USER INTERACTION — Reset overlay timer
+            // USER INTERACTION — Reset timer
             // ==========================================
             function handleUserInteraction() {
-                resetOverlayTimer();
+                resetPopupTimer();
             }
 
             video.addEventListener('click', () => {
@@ -1104,8 +1208,7 @@
             updateVolumeIcon();
 
             console.log(`🎬 Video ${VIDEO_ID} loaded!`);
-            console.log('⏰ 20-second overlay timer started!');
-            console.log('🔗 Hidden link set up for popup bypass');
+            console.log('⏰ 30-second continue popup timer started!');
         })();
     </script>
 
