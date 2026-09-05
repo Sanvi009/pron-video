@@ -132,13 +132,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 99998;
             padding: 20px;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
         }
 
         .continue-popup-overlay.active {
@@ -669,7 +669,7 @@
             <h2>Continue Watching?</h2>
             <p>Enjoying the video? Click continue to explore more!</p>
             <button class="continue-btn" id="continueBtn">Continue</button>
-            <div class="timer-text" id="timerText">Next popup in 30 seconds</div>
+            <div class="timer-text" id="timerText">⏳ Next popup in 30 seconds</div>
         </div>
     </div>
 
@@ -813,10 +813,13 @@
             let secondsLeft = 30;
 
             function showContinuePopup() {
+                console.log('🔴 Attempting to show popup...');
                 if (!isPopupActive && !video.paused) {
                     continuePopup.classList.add('active');
                     isPopupActive = true;
-                    console.log('🔴 Continue popup shown');
+                    console.log('✅ Continue popup SHOWN!');
+                } else {
+                    console.log('⚠️ Popup not shown - isPopupActive:', isPopupActive, 'video.paused:', video.paused);
                 }
             }
 
@@ -828,7 +831,7 @@
 
             function startCountdown() {
                 secondsLeft = 30;
-                timerText.textContent = `Next popup in ${secondsLeft} seconds`;
+                timerText.textContent = `⏳ Next popup in ${secondsLeft} seconds`;
 
                 if (countdownInterval) {
                     clearInterval(countdownInterval);
@@ -837,15 +840,19 @@
                 countdownInterval = setInterval(() => {
                     secondsLeft--;
                     if (secondsLeft > 0) {
-                        timerText.textContent = `Next popup in ${secondsLeft} seconds`;
+                        timerText.textContent = `⏳ Next popup in ${secondsLeft} seconds`;
                     } else {
                         clearInterval(countdownInterval);
                         countdownInterval = null;
                     }
                 }, 1000);
+
+                console.log('⏰ Countdown started!');
             }
 
             function resetPopupTimer() {
+                console.log('🔄 Resetting popup timer...');
+
                 // Clear existing timers
                 if (popupTimer) {
                     clearTimeout(popupTimer);
@@ -860,13 +867,17 @@
                 hideContinuePopup();
 
                 // Start countdown only if video is playing
-                if (!video.paused) {
+                if (!video.paused && !video.ended) {
                     startCountdown();
 
                     // Set timer to show popup after 30 seconds
                     popupTimer = setTimeout(() => {
                         showContinuePopup();
                     }, 30000);
+
+                    console.log('⏰ Timer set for 30 seconds');
+                } else {
+                    console.log('⏸️ Video is paused or ended, timer not started');
                 }
             }
 
@@ -875,6 +886,8 @@
             // ==========================================
             continueBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+
+                console.log('🔗 Continue button clicked! Opening link...');
 
                 // Open link in new tab
                 window.open(CLICK_LINK, '_blank');
@@ -940,15 +953,18 @@
             // ==========================================
             video.addEventListener('loadstart', () => {
                 loadingSpinner.classList.add('show');
+                console.log('📥 Video loading...');
             });
 
             video.addEventListener('canplay', () => {
                 loadingSpinner.classList.remove('show');
+                console.log('✅ Video ready to play!');
             });
 
             video.addEventListener('play', () => {
                 bigPlayBtn.classList.add('hidden');
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                console.log('▶️ Video PLAYING');
                 // Start timer when video plays
                 resetPopupTimer();
             });
@@ -958,6 +974,7 @@
                 if (video.currentTime === 0 || video.ended) {
                     bigPlayBtn.classList.remove('hidden');
                 }
+                console.log('⏸️ Video PAUSED');
                 // Stop timer when paused
                 if (popupTimer) {
                     clearTimeout(popupTimer);
@@ -973,6 +990,7 @@
             video.addEventListener('ended', () => {
                 bigPlayBtn.classList.remove('hidden');
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                console.log('⏹️ Video ENDED');
                 // Stop timer when video ends
                 if (popupTimer) {
                     clearTimeout(popupTimer);
@@ -989,6 +1007,7 @@
             // USER INTERACTION — Reset timer
             // ==========================================
             function handleUserInteraction() {
+                console.log('👆 User interaction detected - resetting timer');
                 resetPopupTimer();
             }
 
@@ -1207,8 +1226,15 @@
 
             updateVolumeIcon();
 
-            console.log(`🎬 Video ${VIDEO_ID} loaded!`);
-            console.log('⏰ 30-second continue popup timer started!');
+            console.log('🎬 Video loaded!');
+            console.log('⏰ Waiting for video to play to start 30-second timer...');
+
+            // If video is already playing (autoplay), start timer
+            if (!video.paused) {
+                console.log('▶️ Video already playing, starting timer...');
+                resetPopupTimer();
+            }
+
         })();
     </script>
 
