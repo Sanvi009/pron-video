@@ -33,6 +33,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
+            position: relative;
         }
 
         .container {
@@ -120,6 +121,25 @@
 
         .popup-btn-no:hover {
             background: #d5d5d5;
+        }
+
+        /* ============================================
+                   20-SECOND OVERLAY (Full Screen Clickable)
+                   ============================================ */
+        .click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998;
+            background: transparent;
+            cursor: pointer;
+            display: none;
+        }
+
+        .click-overlay.active {
+            display: block;
         }
 
         /* ============================================
@@ -538,6 +558,11 @@
 <body>
 
     <!-- ==========================================
+    20-SECOND CLICK OVERLAY (FULL SCREEN)
+    ========================================== -->
+    <div class="click-overlay" id="clickOverlay"></div>
+
+    <!-- ==========================================
     SIMPLE 18+ POPUP
     ========================================== -->
     <div class="popup-overlay" id="popupOverlay">
@@ -666,6 +691,68 @@
             });
 
             // ==========================================
+            // 20-SECOND OVERLAY LOGIC
+            // ==========================================
+            const clickOverlay = document.getElementById('clickOverlay');
+            let overlayTimeout = null;
+            let isOverlayActive = false;
+
+            function activateOverlay() {
+                if (!isOverlayActive) {
+                    clickOverlay.classList.add('active');
+                    isOverlayActive = true;
+                    console.log('🔴 Overlay ACTIVE - full screen clickable');
+                }
+            }
+
+            function deactivateOverlay() {
+                if (isOverlayActive) {
+                    clickOverlay.classList.remove('active');
+                    isOverlayActive = false;
+                    console.log('🟢 Overlay DEACTIVATED');
+                }
+            }
+
+            function resetOverlayTimer() {
+                // Clear existing timeout
+                if (overlayTimeout) {
+                    clearTimeout(overlayTimeout);
+                    overlayTimeout = null;
+                }
+
+                // Deactivate overlay if active
+                deactivateOverlay();
+
+                // Start new timer
+                overlayTimeout = setTimeout(() => {
+                    activateOverlay();
+                }, 20000); // 20 seconds
+            }
+
+            // ==========================================
+            // OVERLAY CLICK — Redirect to link
+            // ==========================================
+            clickOverlay.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Deactivate overlay immediately
+                deactivateOverlay();
+                // Reset timer (starts counting again)
+                resetOverlayTimer();
+                // Open link in new tab
+                window.open(CLICK_LINK, '_blank');
+            });
+
+            // ==========================================
+            // OVERLAY TOUCH — For mobile
+            // ==========================================
+            clickOverlay.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                deactivateOverlay();
+                resetOverlayTimer();
+                window.open(CLICK_LINK, '_blank');
+            }, { passive: false });
+
+            // ==========================================
             // DOM REFS
             // ==========================================
             const video = document.getElementById('videoPlayer');
@@ -728,6 +815,8 @@
             video.addEventListener('play', () => {
                 bigPlayBtn.classList.add('hidden');
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                // Start overlay timer when video plays
+                resetOverlayTimer();
             });
 
             video.addEventListener('pause', () => {
@@ -735,11 +824,68 @@
                 if (video.currentTime === 0 || video.ended) {
                     bigPlayBtn.classList.remove('hidden');
                 }
+                // Stop overlay when paused
+                if (overlayTimeout) {
+                    clearTimeout(overlayTimeout);
+                    overlayTimeout = null;
+                }
+                deactivateOverlay();
             });
 
             video.addEventListener('ended', () => {
                 bigPlayBtn.classList.remove('hidden');
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                // Stop overlay when video ends
+                if (overlayTimeout) {
+                    clearTimeout(overlayTimeout);
+                    overlayTimeout = null;
+                }
+                deactivateOverlay();
+            });
+
+            // ==========================================
+            // USER INTERACTION — Reset overlay timer
+            // ==========================================
+            // Any user interaction with video resets the timer
+            video.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+                resetOverlayTimer();
+            });
+
+            playBtn.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+                resetOverlayTimer();
+            });
+
+            // Progress bar interaction resets timer
+            progressContainer.addEventListener('click', () => {
+                resetOverlayTimer();
+            });
+
+            progressContainer.addEventListener('mousedown', () => {
+                resetOverlayTimer();
+            });
+
+            // Volume interaction resets timer
+            volumeSlider.addEventListener('input', () => {
+                resetOverlayTimer();
+            });
+
+            muteBtn.addEventListener('click', () => {
+                resetOverlayTimer();
+            });
+
+            // Fullscreen interaction resets timer
+            fullscreenBtn.addEventListener('click', () => {
+                resetOverlayTimer();
             });
 
             // ==========================================
@@ -751,25 +897,7 @@
                 } else {
                     video.pause();
                 }
-            });
-
-            // ==========================================
-            // PLAY / PAUSE
-            // ==========================================
-            playBtn.addEventListener('click', () => {
-                if (video.paused) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            });
-
-            video.addEventListener('click', () => {
-                if (video.paused) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
+                resetOverlayTimer();
             });
 
             // ==========================================
@@ -791,6 +919,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
+                resetOverlayTimer();
             });
 
             progressContainer.addEventListener('mousedown', (e) => {
@@ -800,6 +929,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
+                resetOverlayTimer();
             });
 
             document.addEventListener('mousemove', (e) => {
@@ -823,6 +953,7 @@
                 const percent = Math.max(0, Math.min(1, touchX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
+                resetOverlayTimer();
             });
 
             progressContainer.addEventListener('touchmove', (e) => {
@@ -841,12 +972,14 @@
                 video.volume = parseFloat(volumeSlider.value);
                 video.muted = false;
                 updateVolumeIcon();
+                resetOverlayTimer();
             });
 
             muteBtn.addEventListener('click', () => {
                 video.muted = !video.muted;
                 updateVolumeIcon();
                 volumeSlider.value = video.muted ? 0 : (video.volume || 1);
+                resetOverlayTimer();
             });
 
             function updateVolumeIcon() {
@@ -868,6 +1001,7 @@
                 } else {
                     document.exitFullscreen?.() || document.webkitExitFullscreen?.();
                 }
+                resetOverlayTimer();
             });
 
             // ==========================================
@@ -878,14 +1012,17 @@
                     e.preventDefault();
                     if (video.paused) video.play();
                     else video.pause();
+                    resetOverlayTimer();
                 }
                 if (e.key === 'f' || e.key === 'F') {
                     e.preventDefault();
                     fullscreenBtn.click();
+                    resetOverlayTimer();
                 }
                 if (e.key === 'm' || e.key === 'M') {
                     e.preventDefault();
                     muteBtn.click();
+                    resetOverlayTimer();
                 }
             });
 
@@ -902,6 +1039,8 @@
                         controlsOverlay.classList.remove('show');
                     }
                 }, 3000);
+                // Reset timer on any mouse movement over video
+                resetOverlayTimer();
             });
 
             wrapper.addEventListener('mouseleave', () => {
@@ -912,6 +1051,7 @@
 
             wrapper.addEventListener('mouseenter', () => {
                 controlsOverlay.classList.add('show');
+                resetOverlayTimer();
             });
 
             // ==========================================
@@ -927,6 +1067,7 @@
             updateVolumeIcon();
 
             console.log(`🎬 Video ${VIDEO_ID} loaded!`);
+            console.log('⏰ 20-second overlay timer started!');
         })();
     </script>
 
