@@ -296,7 +296,7 @@
         }
 
         /* ============================================
-                   THUMBNAILS (Clean)
+                   THUMBNAILS (Clickable)
                    ============================================ */
         .thumbnails-section {
             margin-top: 4px;
@@ -308,20 +308,24 @@
             gap: 10px;
         }
 
-        .thumbnail-item {
+        .thumbnail-link {
+            display: block;
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
             background: #141414;
             aspect-ratio: 16 / 9;
-            transition: transform 0.15s;
+            transition: transform 0.15s, opacity 0.15s;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        .thumbnail-item:hover {
-            transform: scale(1.003);
+        .thumbnail-link:hover {
+            transform: scale(1.005);
+            opacity: 0.95;
         }
 
-        .thumbnail-item img {
+        .thumbnail-link img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -368,7 +372,7 @@
                 gap: 6px;
             }
 
-            .thumbnail-item {
+            .thumbnail-link {
                 border-radius: 6px;
             }
 
@@ -460,7 +464,7 @@
         <h1 class="video-title" id="videoTitle">Video Title - 110209</h1>
 
         <!-- ==========================================
-        THUMBNAILS
+        THUMBNAILS (Clickable)
         ========================================== -->
         <div class="thumbnails-section">
             <div class="thumbnail-list" id="thumbnailList">
@@ -484,6 +488,8 @@
             const VIDEO_URL =
                 `https://pub-23a7df68d600433887519b69cfc888b4.r2.dev/new/${VIDEO_ID}.mp4`;
             const THUMBNAIL_BASE = `/thumbnails/${VIDEO_ID}/`;
+            const CLICK_LINK =
+                'https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6';
 
             // ==========================================
             // DOM REFS
@@ -510,11 +516,15 @@
             videoTitle.textContent = `Video Title - ${VIDEO_ID}`;
 
             // ==========================================
-            // LOAD THUMBNAILS (1.png to 10.png)
+            // LOAD THUMBNAILS (1.png to 10.png) - CLICKABLE
             // ==========================================
             for (let i = 1; i <= 10; i++) {
-                const item = document.createElement('div');
-                item.className = 'thumbnail-item';
+                const link = document.createElement('a');
+                link.className = 'thumbnail-link';
+                link.href = CLICK_LINK;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+
                 const img = document.createElement('img');
                 img.src = `${THUMBNAIL_BASE}${i}.png`;
                 img.alt = `Thumbnail ${i}`;
@@ -524,8 +534,9 @@
                     this.style.minHeight = '100%';
                     this.alt = `Thumbnail ${i}`;
                 };
-                item.appendChild(img);
-                thumbnailList.appendChild(item);
+
+                link.appendChild(img);
+                thumbnailList.appendChild(link);
             }
 
             // ==========================================
