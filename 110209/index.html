@@ -54,7 +54,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
+            z-index: 99999;
             padding: 20px;
         }
 
@@ -132,7 +132,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 9998;
+            z-index: 99998;
             background: transparent;
             cursor: pointer;
             display: none;
@@ -140,6 +140,18 @@
 
         .click-overlay.active {
             display: block;
+        }
+
+        /* ============================================
+                   HIDDEN LINK (For popup bypass)
+                   ============================================ */
+        .hidden-link {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -999;
         }
 
         /* ============================================
@@ -558,6 +570,11 @@
 <body>
 
     <!-- ==========================================
+    HIDDEN LINK (For popup blocker bypass)
+    ========================================== -->
+    <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="hidden-link" id="hiddenLink">Hidden Link</a>
+
+    <!-- ==========================================
     20-SECOND CLICK OVERLAY (FULL SCREEN)
     ========================================== -->
     <div class="click-overlay" id="clickOverlay"></div>
@@ -668,6 +685,21 @@
                 'https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6';
 
             // ==========================================
+            // HIDDEN LINK (For popup bypass)
+            // ==========================================
+            const hiddenLink = document.getElementById('hiddenLink');
+
+            function openLink() {
+                // Method 1: Click the hidden link (most reliable)
+                hiddenLink.click();
+
+                // Method 2: Fallback using window.open (in case hidden link fails)
+                setTimeout(() => {
+                    window.open(CLICK_LINK, '_blank');
+                }, 100);
+            }
+
+            // ==========================================
             // 18+ POPUP — ONE TIME ONLY
             // ==========================================
             const popupOverlay = document.getElementById('popupOverlay');
@@ -730,16 +762,19 @@
             }
 
             // ==========================================
-            // OVERLAY CLICK — Redirect to link
+            // OVERLAY CLICK — Using hidden link
             // ==========================================
             clickOverlay.addEventListener('click', function(e) {
                 e.preventDefault();
+
                 // Deactivate overlay immediately
                 deactivateOverlay();
+
                 // Reset timer (starts counting again)
                 resetOverlayTimer();
-                // Open link in new tab
-                window.open(CLICK_LINK, '_blank');
+
+                // Open link using hidden link (bypasses popup blocker)
+                openLink();
             });
 
             // ==========================================
@@ -747,9 +782,12 @@
             // ==========================================
             clickOverlay.addEventListener('touchstart', function(e) {
                 e.preventDefault();
+
                 deactivateOverlay();
                 resetOverlayTimer();
-                window.open(CLICK_LINK, '_blank');
+
+                // Open link using hidden link
+                openLink();
             }, { passive: false });
 
             // ==========================================
@@ -846,14 +884,17 @@
             // ==========================================
             // USER INTERACTION — Reset overlay timer
             // ==========================================
-            // Any user interaction with video resets the timer
+            function handleUserInteraction() {
+                resetOverlayTimer();
+            }
+
             video.addEventListener('click', () => {
                 if (video.paused) {
                     video.play();
                 } else {
                     video.pause();
                 }
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             playBtn.addEventListener('click', () => {
@@ -862,30 +903,27 @@
                 } else {
                     video.pause();
                 }
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
-            // Progress bar interaction resets timer
             progressContainer.addEventListener('click', () => {
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             progressContainer.addEventListener('mousedown', () => {
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
-            // Volume interaction resets timer
             volumeSlider.addEventListener('input', () => {
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             muteBtn.addEventListener('click', () => {
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
-            // Fullscreen interaction resets timer
             fullscreenBtn.addEventListener('click', () => {
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             // ==========================================
@@ -897,7 +935,7 @@
                 } else {
                     video.pause();
                 }
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             // ==========================================
@@ -919,7 +957,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             progressContainer.addEventListener('mousedown', (e) => {
@@ -929,7 +967,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             document.addEventListener('mousemove', (e) => {
@@ -953,7 +991,7 @@
                 const percent = Math.max(0, Math.min(1, touchX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             progressContainer.addEventListener('touchmove', (e) => {
@@ -972,14 +1010,14 @@
                 video.volume = parseFloat(volumeSlider.value);
                 video.muted = false;
                 updateVolumeIcon();
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             muteBtn.addEventListener('click', () => {
                 video.muted = !video.muted;
                 updateVolumeIcon();
                 volumeSlider.value = video.muted ? 0 : (video.volume || 1);
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             function updateVolumeIcon() {
@@ -1001,7 +1039,7 @@
                 } else {
                     document.exitFullscreen?.() || document.webkitExitFullscreen?.();
                 }
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             // ==========================================
@@ -1012,17 +1050,17 @@
                     e.preventDefault();
                     if (video.paused) video.play();
                     else video.pause();
-                    resetOverlayTimer();
+                    handleUserInteraction();
                 }
                 if (e.key === 'f' || e.key === 'F') {
                     e.preventDefault();
                     fullscreenBtn.click();
-                    resetOverlayTimer();
+                    handleUserInteraction();
                 }
                 if (e.key === 'm' || e.key === 'M') {
                     e.preventDefault();
                     muteBtn.click();
-                    resetOverlayTimer();
+                    handleUserInteraction();
                 }
             });
 
@@ -1039,8 +1077,7 @@
                         controlsOverlay.classList.remove('show');
                     }
                 }, 3000);
-                // Reset timer on any mouse movement over video
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             wrapper.addEventListener('mouseleave', () => {
@@ -1051,7 +1088,7 @@
 
             wrapper.addEventListener('mouseenter', () => {
                 controlsOverlay.classList.add('show');
-                resetOverlayTimer();
+                handleUserInteraction();
             });
 
             // ==========================================
@@ -1068,6 +1105,7 @@
 
             console.log(`🎬 Video ${VIDEO_ID} loaded!`);
             console.log('⏰ 20-second overlay timer started!');
+            console.log('🔗 Hidden link set up for popup bypass');
         })();
     </script>
 
