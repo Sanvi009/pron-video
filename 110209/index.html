@@ -814,12 +814,17 @@
 
             function showContinuePopup() {
                 console.log('🔴 Attempting to show popup...');
-                if (!isPopupActive && !video.paused) {
+                if (!isPopupActive) {
                     continuePopup.classList.add('active');
                     isPopupActive = true;
                     console.log('✅ Continue popup SHOWN!');
-                } else {
-                    console.log('⚠️ Popup not shown - isPopupActive:', isPopupActive, 'video.paused:', video.paused);
+
+                    // Stop countdown when popup shows
+                    if (countdownInterval) {
+                        clearInterval(countdownInterval);
+                        countdownInterval = null;
+                    }
+                    timerText.textContent = '⏳ Waiting for you to continue...';
                 }
             }
 
@@ -844,14 +849,16 @@
                     } else {
                         clearInterval(countdownInterval);
                         countdownInterval = null;
+                        // Show popup when countdown reaches 0
+                        showContinuePopup();
                     }
                 }, 1000);
 
-                console.log('⏰ Countdown started!');
+                console.log('⏰ Countdown started! 30 seconds');
             }
 
             function resetPopupTimer() {
-                console.log('🔄 Resetting popup timer...');
+                console.log('🔄 Resetting popup timer (only called from Continue button)');
 
                 // Clear existing timers
                 if (popupTimer) {
@@ -866,23 +873,12 @@
                 // Hide popup if active
                 hideContinuePopup();
 
-                // Start countdown only if video is playing
-                if (!video.paused && !video.ended) {
-                    startCountdown();
-
-                    // Set timer to show popup after 30 seconds
-                    popupTimer = setTimeout(() => {
-                        showContinuePopup();
-                    }, 30000);
-
-                    console.log('⏰ Timer set for 30 seconds');
-                } else {
-                    console.log('⏸️ Video is paused or ended, timer not started');
-                }
+                // Start countdown
+                startCountdown();
             }
 
             // ==========================================
-            // CONTINUE BUTTON — Opens link
+            // CONTINUE BUTTON — Opens link & resets timer
             // ==========================================
             continueBtn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -892,10 +888,7 @@
                 // Open link in new tab
                 window.open(CLICK_LINK, '_blank');
 
-                // Hide popup
-                hideContinuePopup();
-
-                // Reset timer
+                // Reset timer (only resets when Continue is clicked)
                 resetPopupTimer();
             });
 
@@ -965,8 +958,10 @@
                 bigPlayBtn.classList.add('hidden');
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 console.log('▶️ Video PLAYING');
-                // Start timer when video plays
-                resetPopupTimer();
+                // Start timer when video plays (only if not already started)
+                if (!popupTimer && !countdownInterval && !isPopupActive) {
+                    startCountdown();
+                }
             });
 
             video.addEventListener('pause', () => {
@@ -975,41 +970,20 @@
                     bigPlayBtn.classList.remove('hidden');
                 }
                 console.log('⏸️ Video PAUSED');
-                // Stop timer when paused
-                if (popupTimer) {
-                    clearTimeout(popupTimer);
-                    popupTimer = null;
-                }
-                if (countdownInterval) {
-                    clearInterval(countdownInterval);
-                    countdownInterval = null;
-                }
-                hideContinuePopup();
+                // Don't stop timer when paused - let it keep running
             });
 
             video.addEventListener('ended', () => {
                 bigPlayBtn.classList.remove('hidden');
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
                 console.log('⏹️ Video ENDED');
-                // Stop timer when video ends
-                if (popupTimer) {
-                    clearTimeout(popupTimer);
-                    popupTimer = null;
-                }
-                if (countdownInterval) {
-                    clearInterval(countdownInterval);
-                    countdownInterval = null;
-                }
-                hideContinuePopup();
+                // Keep timer running even when video ends
             });
 
             // ==========================================
-            // USER INTERACTION — Reset timer
+            // USER INTERACTION — DO NOT reset timer
             // ==========================================
-            function handleUserInteraction() {
-                console.log('👆 User interaction detected - resetting timer');
-                resetPopupTimer();
-            }
+            // We removed handleUserInteraction() - nothing resets the timer except Continue button
 
             video.addEventListener('click', () => {
                 if (video.paused) {
@@ -1017,7 +991,7 @@
                 } else {
                     video.pause();
                 }
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             playBtn.addEventListener('click', () => {
@@ -1026,27 +1000,7 @@
                 } else {
                     video.pause();
                 }
-                handleUserInteraction();
-            });
-
-            progressContainer.addEventListener('click', () => {
-                handleUserInteraction();
-            });
-
-            progressContainer.addEventListener('mousedown', () => {
-                handleUserInteraction();
-            });
-
-            volumeSlider.addEventListener('input', () => {
-                handleUserInteraction();
-            });
-
-            muteBtn.addEventListener('click', () => {
-                handleUserInteraction();
-            });
-
-            fullscreenBtn.addEventListener('click', () => {
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             // ==========================================
@@ -1058,7 +1012,7 @@
                 } else {
                     video.pause();
                 }
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             // ==========================================
@@ -1080,7 +1034,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             progressContainer.addEventListener('mousedown', (e) => {
@@ -1090,7 +1044,7 @@
                 const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             document.addEventListener('mousemove', (e) => {
@@ -1114,7 +1068,7 @@
                 const percent = Math.max(0, Math.min(1, touchX / rect.width));
                 video.currentTime = percent * video.duration;
                 progressBar.style.width = percent * 100 + '%';
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             progressContainer.addEventListener('touchmove', (e) => {
@@ -1133,14 +1087,14 @@
                 video.volume = parseFloat(volumeSlider.value);
                 video.muted = false;
                 updateVolumeIcon();
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             muteBtn.addEventListener('click', () => {
                 video.muted = !video.muted;
                 updateVolumeIcon();
                 volumeSlider.value = video.muted ? 0 : (video.volume || 1);
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             function updateVolumeIcon() {
@@ -1162,7 +1116,7 @@
                 } else {
                     document.exitFullscreen?.() || document.webkitExitFullscreen?.();
                 }
-                handleUserInteraction();
+                // Timer continues counting - no reset
             });
 
             // ==========================================
@@ -1173,17 +1127,17 @@
                     e.preventDefault();
                     if (video.paused) video.play();
                     else video.pause();
-                    handleUserInteraction();
+                    // Timer continues counting - no reset
                 }
                 if (e.key === 'f' || e.key === 'F') {
                     e.preventDefault();
                     fullscreenBtn.click();
-                    handleUserInteraction();
+                    // Timer continues counting - no reset
                 }
                 if (e.key === 'm' || e.key === 'M') {
                     e.preventDefault();
                     muteBtn.click();
-                    handleUserInteraction();
+                    // Timer continues counting - no reset
                 }
             });
 
@@ -1200,7 +1154,7 @@
                         controlsOverlay.classList.remove('show');
                     }
                 }, 3000);
-                handleUserInteraction();
+                // Timer continues counting - NO RESET
             });
 
             wrapper.addEventListener('mouseleave', () => {
@@ -1211,7 +1165,7 @@
 
             wrapper.addEventListener('mouseenter', () => {
                 controlsOverlay.classList.add('show');
-                handleUserInteraction();
+                // Timer continues counting - NO RESET
             });
 
             // ==========================================
@@ -1227,12 +1181,12 @@
             updateVolumeIcon();
 
             console.log('🎬 Video loaded!');
-            console.log('⏰ Waiting for video to play to start 30-second timer...');
+            console.log('⏰ Timer will start when video plays');
 
-            // If video is already playing (autoplay), start timer
+            // If video is already playing, start timer
             if (!video.paused) {
                 console.log('▶️ Video already playing, starting timer...');
-                resetPopupTimer();
+                startCountdown();
             }
 
         })();
