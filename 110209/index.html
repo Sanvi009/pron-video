@@ -26,7 +26,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             width: 100%;
         }
 
@@ -36,10 +36,11 @@
         .video-wrapper {
             position: relative;
             background: #000;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
             width: 100%;
+            cursor: pointer;
         }
 
         .video-wrapper video {
@@ -57,11 +58,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-top: 4px solid #ff0000;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #fff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             animation: spin 0.8s linear infinite;
             display: none;
             z-index: 5;
@@ -81,52 +82,53 @@
         }
 
         /* ============================================
-                   BIG PLAY BUTTON
+                   BIG PLAY BUTTON (YouTube Style)
                    ============================================ */
         .big-play-btn {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 0, 0, 0.85);
+            width: 72px;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.25);
             border: none;
             border-radius: 50%;
             color: #fff;
-            font-size: 36px;
+            font-size: 32px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.2s;
             z-index: 10;
             pointer-events: auto;
+            backdrop-filter: blur(4px);
         }
 
         .big-play-btn:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: rgba(255, 0, 0, 1);
+            background: rgba(255, 255, 255, 0.35);
+            transform: translate(-50%, -50%) scale(1.05);
         }
 
         .big-play-btn.hidden {
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s;
+            transition: opacity 0.3s;
         }
 
         /* ============================================
-                   CONTROLS OVERLAY
+                   CONTROLS OVERLAY (YouTube Style)
                    ============================================ */
         .controls-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
-            padding: 40px 20px 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 0.95));
+            padding: 50px 16px 14px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.25s ease;
             z-index: 20;
         }
 
@@ -136,20 +138,25 @@
         }
 
         /* ============================================
-                   PROGRESS BAR
+                   PROGRESS BAR (Bigger + Smoother)
                    ============================================ */
         .progress-container {
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
             cursor: pointer;
             position: relative;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            transition: height 0.15s;
         }
 
         .progress-container:hover {
-            height: 8px;
+            height: 12px;
+        }
+
+        .progress-container:hover .progress-bar::after {
+            opacity: 1;
         }
 
         .progress-bar {
@@ -158,24 +165,20 @@
             border-radius: 4px;
             width: 0%;
             position: relative;
-            transition: height 0.1s;
+            transition: width 0.05s linear;
         }
 
         .progress-bar::after {
             content: '';
             position: absolute;
-            right: -6px;
+            right: -8px;
             top: -4px;
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             background: #ff0000;
             border-radius: 50%;
             opacity: 0;
             transition: opacity 0.2s;
-        }
-
-        .progress-container:hover .progress-bar::after {
-            opacity: 1;
         }
 
         /* ============================================
@@ -184,7 +187,7 @@
         .controls-row {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
@@ -192,25 +195,28 @@
             background: none;
             border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
-            padding: 4px 6px;
+            padding: 4px 8px;
             border-radius: 4px;
             transition: background 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0.9;
         }
 
         .controls-row button:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            opacity: 1;
         }
 
         .controls-row .time {
-            font-size: 14px;
-            color: #ccc;
+            font-size: 13px;
+            color: #ddd;
             font-variant-numeric: tabular-nums;
             min-width: 100px;
+            letter-spacing: 0.3px;
         }
 
         .controls-row .volume-wrap {
@@ -220,7 +226,7 @@
         }
 
         .controls-row .volume-wrap input[type="range"] {
-            width: 60px;
+            width: 50px;
             height: 4px;
             -webkit-appearance: none;
             appearance: none;
@@ -230,12 +236,16 @@
             transition: width 0.2s;
         }
 
+        .controls-row .volume-wrap:hover input[type="range"] {
+            width: 70px;
+        }
+
         .controls-row .volume-wrap input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 12px;
             height: 12px;
-            background: #ff0000;
+            background: #fff;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -243,21 +253,26 @@
         .controls-row .volume-wrap input[type="range"]::-moz-range-thumb {
             width: 12px;
             height: 12px;
-            background: #ff0000;
+            background: #fff;
             border-radius: 50%;
             cursor: pointer;
             border: none;
         }
 
         .controls-row .speed-select {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 13px;
             cursor: pointer;
             outline: none;
+            font-family: inherit;
+        }
+
+        .controls-row .speed-select:hover {
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .controls-row .speed-select option {
@@ -273,48 +288,37 @@
                    VIDEO TITLE
                    ============================================ */
         .video-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 24px 0 20px;
+            font-size: 22px;
+            font-weight: 600;
+            margin: 16px 0 14px;
             color: #fff;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
         }
 
         /* ============================================
-                   THUMBNAILS SECTION
+                   THUMBNAILS (Clean)
                    ============================================ */
         .thumbnails-section {
-            margin-top: 8px;
-        }
-
-        .thumbnails-section .label {
-            font-size: 18px;
-            font-weight: 600;
-            color: #aaa;
-            margin-bottom: 16px;
-            letter-spacing: 0.3px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 10px;
+            margin-top: 4px;
         }
 
         .thumbnail-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .thumbnail-item {
             width: 100%;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            background: #1a1a1a;
+            background: #141414;
             aspect-ratio: 16 / 9;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.15s;
         }
 
         .thumbnail-item:hover {
-            transform: scale(1.005);
-            box-shadow: 0 4px 24px rgba(255, 0, 0, 0.08);
+            transform: scale(1.003);
         }
 
         .thumbnail-item img {
@@ -333,60 +337,63 @@
             }
 
             .controls-row {
-                gap: 8px;
+                gap: 6px;
             }
 
             .controls-row button {
-                font-size: 16px;
+                font-size: 15px;
                 padding: 2px 4px;
             }
 
             .controls-row .time {
-                font-size: 12px;
-                min-width: 80px;
+                font-size: 11px;
+                min-width: 70px;
             }
 
-            .controls-row .volume-wrap input[type="range"] {
-                width: 40px;
-            }
-
-            .video-title {
-                font-size: 20px;
-                margin: 16px 0 12px;
-            }
-
-            .thumbnails-section .label {
-                font-size: 15px;
-                margin-bottom: 12px;
-            }
-
-            .thumbnail-list {
-                gap: 8px;
-            }
-
-            .thumbnail-item {
-                border-radius: 8px;
-            }
-        }
-
-        @media (max-width: 480px) {
             .controls-row .volume-wrap input[type="range"] {
                 width: 30px;
             }
 
-            .controls-row .speed-select {
-                font-size: 12px;
-                padding: 2px 6px;
+            .controls-row .volume-wrap:hover input[type="range"] {
+                width: 40px;
             }
 
             .video-title {
                 font-size: 17px;
+                margin: 12px 0 10px;
+            }
+
+            .thumbnail-list {
+                gap: 6px;
+            }
+
+            .thumbnail-item {
+                border-radius: 6px;
             }
 
             .big-play-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 28px;
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+
+            .progress-container {
+                height: 6px;
+            }
+
+            .progress-container:hover {
+                height: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .controls-row .speed-select {
+                font-size: 11px;
+                padding: 2px 5px;
+            }
+
+            .video-title {
+                font-size: 15px;
             }
         }
     </style>
@@ -474,13 +481,12 @@
         <!-- ==========================================
         VIDEO TITLE
         ========================================== -->
-        <h1 class="video-title" id="videoTitle">Sample Video Title - 110209</h1>
+        <h1 class="video-title" id="videoTitle">Video Title - 110209</h1>
 
         <!-- ==========================================
         THUMBNAILS
         ========================================== -->
         <div class="thumbnails-section">
-            <div class="label">📸 Scene Previews</div>
             <div class="thumbnail-list" id="thumbnailList">
                 <!-- Injected by JavaScript -->
             </div>
@@ -500,7 +506,7 @@
             // ==========================================
             const VIDEO_ID = '110209';
             const VIDEO_URL =
-            `https://pub-23a7df68d600433887519b69cfc888b4.r2.dev/new/${VIDEO_ID}.mp4`;
+                `https://pub-23a7df68d600433887519b69cfc888b4.r2.dev/new/${VIDEO_ID}.mp4`;
             const THUMBNAIL_BASE = `/thumbnails/${VIDEO_ID}/`;
 
             // ==========================================
@@ -528,7 +534,7 @@
             // SET VIDEO SOURCE
             // ==========================================
             video.src = VIDEO_URL;
-            videoTitle.textContent = `Sample Video Title - ${VIDEO_ID}`;
+            videoTitle.textContent = `Video Title - ${VIDEO_ID}`;
 
             // ==========================================
             // LOAD THUMBNAILS (1.png to 10.png)
@@ -540,11 +546,10 @@
                 img.src = `${THUMBNAIL_BASE}${i}.png`;
                 img.alt = `Thumbnail ${i}`;
                 img.loading = 'lazy';
-                // If image fails to load, show a placeholder
                 img.onerror = function() {
-                    this.style.background = '#1a1a1a';
+                    this.style.background = '#141414';
                     this.style.minHeight = '100%';
-                    this.alt = `Thumbnail ${i} (not found)`;
+                    this.alt = `Thumbnail ${i}`;
                 };
                 item.appendChild(img);
                 thumbnailList.appendChild(item);
@@ -621,20 +626,68 @@
             });
 
             // ==========================================
-            // PROGRESS BAR
+            // PROGRESS BAR (Smooth + Clickable)
             // ==========================================
+            let isDragging = false;
+
             video.addEventListener('timeupdate', () => {
-                const percent = (video.currentTime / video.duration) * 100;
-                progressBar.style.width = percent + '%';
-                timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video
-                .duration);
+                if (!isDragging) {
+                    const percent = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = percent + '%';
+                }
+                timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
             });
 
+            // Click to seek
             progressContainer.addEventListener('click', (e) => {
                 const rect = progressContainer.getBoundingClientRect();
                 const clickX = e.clientX - rect.left;
-                const percent = clickX / rect.width;
+                const percent = Math.max(0, Math.min(1, clickX / rect.width));
                 video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            // Drag to seek (smooth)
+            progressContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                const rect = progressContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, clickX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const percent = Math.max(0, Math.min(1, clickX / rect.width));
+                    video.currentTime = percent * video.duration;
+                    progressBar.style.width = percent * 100 + '%';
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Touch support for mobile
+            progressContainer.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const rect = progressContainer.getBoundingClientRect();
+                const touchX = e.touches[0].clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, touchX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            progressContainer.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = progressContainer.getBoundingClientRect();
+                const touchX = e.touches[0].clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, touchX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
             });
 
             // ==========================================
@@ -684,28 +737,23 @@
             // KEYBOARD SHORTCUTS
             // ==========================================
             document.addEventListener('keydown', (e) => {
-                // Space = toggle play
                 if (e.key === ' ' || e.key === 'Space') {
                     e.preventDefault();
                     if (video.paused) video.play();
                     else video.pause();
                 }
-                // Arrow Right = forward 10s
                 if (e.key === 'ArrowRight') {
                     e.preventDefault();
                     video.currentTime = Math.min(video.duration, video.currentTime + 10);
                 }
-                // Arrow Left = rewind 10s
                 if (e.key === 'ArrowLeft') {
                     e.preventDefault();
                     video.currentTime = Math.max(0, video.currentTime - 10);
                 }
-                // F = fullscreen
                 if (e.key === 'f' || e.key === 'F') {
                     e.preventDefault();
                     fullscreenBtn.click();
                 }
-                // M = mute
                 if (e.key === 'm' || e.key === 'M') {
                     e.preventDefault();
                     muteBtn.click();
