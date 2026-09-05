@@ -15,7 +15,6 @@
             box-sizing: border-box;
         }
 
-        /* Remove blue highlight on click */
         *,
         *:focus,
         *:active {
@@ -34,7 +33,6 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            overflow: hidden;
         }
 
         .container {
@@ -43,7 +41,7 @@
         }
 
         /* ============================================
-                   18+ POPUP OVERLAY
+                   SIMPLE 18+ POPUP
                    ============================================ */
         .popup-overlay {
             position: fixed;
@@ -51,124 +49,77 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             padding: 20px;
-            animation: fadeIn 0.5s ease;
         }
 
         .popup-overlay.hidden {
             display: none;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
         .popup-box {
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 50px 40px 40px;
-            max-width: 480px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px 36px 32px;
+            max-width: 380px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
-        }
-
-        .popup-box .icon {
-            font-size: 56px;
-            margin-bottom: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .popup-box h2 {
-            font-size: 32px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .popup-box .subtitle {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-
-        .popup-box .subtitle strong {
-            color: #ff0000;
+            font-size: 22px;
             font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .popup-box p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 28px;
+            line-height: 1.5;
         }
 
         .popup-buttons {
             display: flex;
-            gap: 14px;
+            gap: 12px;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
         .popup-btn {
-            padding: 14px 48px;
+            padding: 10px 40px;
             border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
+            transition: all 0.2s;
             text-decoration: none;
-            display: inline-block;
-            min-width: 120px;
             font-family: inherit;
-            letter-spacing: 0.3px;
+            min-width: 100px;
         }
 
         .popup-btn-yes {
-            background: #ff0000;
+            background: #0066ff;
             color: #fff;
         }
 
         .popup-btn-yes:hover {
-            background: #cc0000;
-            transform: scale(1.03);
-            box-shadow: 0 8px 30px rgba(255, 0, 0, 0.3);
-        }
-
-        .popup-btn-yes:active {
-            transform: scale(0.97);
+            background: #0055dd;
         }
 
         .popup-btn-no {
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #e5e5e5;
+            color: #333;
         }
 
         .popup-btn-no:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.03);
-        }
-
-        .popup-btn-no:active {
-            transform: scale(0.97);
-        }
-
-        .popup-footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #555;
-            letter-spacing: 0.5px;
+            background: #d5d5d5;
         }
 
         /* ============================================
@@ -224,7 +175,7 @@
         }
 
         /* ============================================
-                   BIG PLAY BUTTON (YouTube Style)
+                   BIG PLAY BUTTON
                    ============================================ */
         .big-play-btn {
             position: absolute;
@@ -260,7 +211,7 @@
         }
 
         /* ============================================
-                   CONTROLS OVERLAY (YouTube Style)
+                   CONTROLS OVERLAY
                    ============================================ */
         .controls-overlay {
             position: absolute;
@@ -285,7 +236,7 @@
         }
 
         /* ============================================
-                   PROGRESS BAR (Bigger + Smoother)
+                   PROGRESS BAR
                    ============================================ */
         .progress-container {
             width: 100%;
@@ -330,7 +281,7 @@
         }
 
         /* ============================================
-                   CONTROLS ROW (Simplified)
+                   CONTROLS ROW
                    ============================================ */
         .controls-row {
             display: flex;
@@ -426,7 +377,7 @@
         }
 
         /* ============================================
-                   THUMBNAILS (Super Sensitive & Clickable)
+                   THUMBNAILS
                    ============================================ */
         .thumbnails-section {
             margin-top: 4px;
@@ -485,21 +436,22 @@
             }
 
             .popup-box {
-                padding: 36px 24px 30px;
+                padding: 30px 24px 26px;
             }
 
             .popup-box h2 {
-                font-size: 26px;
+                font-size: 20px;
             }
 
-            .popup-box .subtitle {
+            .popup-box p {
                 font-size: 14px;
+                margin-bottom: 22px;
             }
 
             .popup-btn {
-                padding: 12px 32px;
-                font-size: 16px;
-                min-width: 100px;
+                padding: 8px 28px;
+                font-size: 14px;
+                min-width: 80px;
             }
 
             .controls-row {
@@ -557,27 +509,22 @@
                 font-size: 15px;
             }
 
-            .popup-box h2 {
-                font-size: 22px;
+            .popup-box {
+                padding: 24px 18px 22px;
             }
 
-            .popup-box .icon {
-                font-size: 44px;
+            .popup-box h2 {
+                font-size: 18px;
             }
 
             .popup-btn {
-                padding: 10px 24px;
-                font-size: 14px;
-                min-width: 80px;
+                padding: 8px 20px;
+                font-size: 13px;
+                min-width: 70px;
             }
 
             .popup-buttons {
-                gap: 10px;
-            }
-
-            .thumbnail-link:active {
-                opacity: 0.6;
-                transform: scale(0.97);
+                gap: 8px;
             }
         }
 
@@ -591,21 +538,16 @@
 <body>
 
     <!-- ==========================================
-    18+ POPUP
+    SIMPLE 18+ POPUP
     ========================================== -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-box">
-            <div class="icon">🔞</div>
-            <h2>Are You 18+?</h2>
-            <p class="subtitle">
-                This content is for <strong>adults only</strong>.<br />
-                Please confirm your age to continue.
-            </p>
+            <h2>Are you 18+?</h2>
+            <p>Please confirm your age to continue.</p>
             <div class="popup-buttons">
-                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-yes" id="popupYes">YES</a>
-                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-no" id="popupNo">NO</a>
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-yes" id="popupYes">Yes</a>
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-no" id="popupNo">No</a>
             </div>
-            <div class="popup-footer">By clicking you agree to our terms</div>
         </div>
     </div>
 
@@ -673,7 +615,7 @@
         <h1 class="video-title" id="videoTitle">Video Title - 110209</h1>
 
         <!-- ==========================================
-        THUMBNAILS (Super Sensitive)
+        THUMBNAILS
         ========================================== -->
         <div class="thumbnails-section">
             <div class="thumbnail-list" id="thumbnailList">
@@ -691,7 +633,7 @@
             'use strict';
 
             // ==========================================
-            // CONFIG — CHANGE THIS FOR EACH VIDEO
+            // CONFIG
             // ==========================================
             const VIDEO_ID = '110209';
             const VIDEO_URL =
@@ -707,37 +649,21 @@
             const popupYes = document.getElementById('popupYes');
             const popupNo = document.getElementById('popupNo');
 
-            // Check if user already confirmed age
             const ageConfirmed = localStorage.getItem('ageConfirmed_110209');
 
             if (ageConfirmed === 'true') {
                 popupOverlay.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            } else {
-                // Show popup
-                popupOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-
-                // YES button — stores confirmation then opens link
-                popupYes.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    localStorage.setItem('ageConfirmed_110209', 'true');
-                    popupOverlay.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                    // Open link in new tab
-                    window.open(CLICK_LINK, '_blank');
-                });
-
-                // NO button — stores confirmation then opens link
-                popupNo.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    localStorage.setItem('ageConfirmed_110209', 'true');
-                    popupOverlay.classList.add('hidden');
-                    document.body.style.overflow = 'auto';
-                    // Open link in new tab
-                    window.open(CLICK_LINK, '_blank');
-                });
             }
+
+            popupYes.addEventListener('click', function(e) {
+                localStorage.setItem('ageConfirmed_110209', 'true');
+                popupOverlay.classList.add('hidden');
+            });
+
+            popupNo.addEventListener('click', function(e) {
+                localStorage.setItem('ageConfirmed_110209', 'true');
+                popupOverlay.classList.add('hidden');
+            });
 
             // ==========================================
             // DOM REFS
@@ -764,7 +690,7 @@
             videoTitle.textContent = `Video Title - ${VIDEO_ID}`;
 
             // ==========================================
-            // LOAD THUMBNAILS - SUPER SENSITIVE CLICK
+            // LOAD THUMBNAILS
             // ==========================================
             for (let i = 1; i <= 10; i++) {
                 const link = document.createElement('a');
@@ -772,12 +698,6 @@
                 link.href = CLICK_LINK;
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
-
-                link.addEventListener('touchstart', function(e) {}, { passive: true });
-
-                link.addEventListener('dblclick', function(e) {
-                    e.preventDefault();
-                });
 
                 const img = document.createElement('img');
                 img.src = `${THUMBNAIL_BASE}${i}.png`;
@@ -844,7 +764,6 @@
                 }
             });
 
-            // Click on video toggles play/pause
             video.addEventListener('click', () => {
                 if (video.paused) {
                     video.play();
@@ -854,7 +773,7 @@
             });
 
             // ==========================================
-            // PROGRESS BAR (Smooth + Clickable)
+            // PROGRESS BAR
             // ==========================================
             let isDragging = false;
 
@@ -996,7 +915,7 @@
             });
 
             // ==========================================
-            // HELPER: formatTime
+            // HELPER
             // ==========================================
             function formatTime(seconds) {
                 if (!seconds || isNaN(seconds) || !isFinite(seconds)) return '0:00';
@@ -1005,9 +924,6 @@
                 return m + ':' + (s < 10 ? '0' : '') + s;
             }
 
-            // ==========================================
-            // VOLUME ICON INIT
-            // ==========================================
             updateVolumeIcon();
 
             console.log(`🎬 Video ${VIDEO_ID} loaded!`);
