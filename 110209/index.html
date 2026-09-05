@@ -296,7 +296,7 @@
         }
 
         /* ============================================
-                   THUMBNAILS (Clickable)
+                   THUMBNAILS (Super Sensitive & Clickable)
                    ============================================ */
         .thumbnails-section {
             margin-top: 4px;
@@ -318,11 +318,16 @@
             transition: transform 0.15s, opacity 0.15s;
             text-decoration: none;
             cursor: pointer;
+            position: relative;
+            /* Makes entire area clickable */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            /* Optimizes touch response */;
         }
 
-        .thumbnail-link:hover {
-            transform: scale(1.005);
-            opacity: 0.95;
+        .thumbnail-link:active {
+            opacity: 0.7;
+            transform: scale(0.98);
         }
 
         .thumbnail-link img {
@@ -331,6 +336,19 @@
             object-fit: cover;
             display: block;
             pointer-events: none;
+            /* Prevents image from blocking click */;
+        }
+
+        /* Extra touch sensitivity for mobile */
+        .thumbnail-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            /* Ensures the whole area catches clicks */;
         }
 
         /* ============================================
@@ -394,6 +412,19 @@
         @media (max-width: 480px) {
             .video-title {
                 font-size: 15px;
+            }
+
+            .thumbnail-link:active {
+                opacity: 0.6;
+                transform: scale(0.97);
+            }
+        }
+
+        /* Extra small touch targets */
+        @media (pointer: coarse) {
+            .thumbnail-link {
+                min-height: 120px;
+                /* Ensures good touch target on mobile */;
             }
         }
     </style>
@@ -464,7 +495,7 @@
         <h1 class="video-title" id="videoTitle">Video Title - 110209</h1>
 
         <!-- ==========================================
-        THUMBNAILS (Clickable)
+        THUMBNAILS (Super Sensitive)
         ========================================== -->
         <div class="thumbnails-section">
             <div class="thumbnail-list" id="thumbnailList">
@@ -516,7 +547,7 @@
             videoTitle.textContent = `Video Title - ${VIDEO_ID}`;
 
             // ==========================================
-            // LOAD THUMBNAILS (1.png to 10.png) - CLICKABLE
+            // LOAD THUMBNAILS - SUPER SENSITIVE CLICK
             // ==========================================
             for (let i = 1; i <= 10; i++) {
                 const link = document.createElement('a');
@@ -525,10 +556,21 @@
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
 
+                // Extra touch sensitivity
+                link.addEventListener('touchstart', function(e) {
+                    // Let the click happen naturally
+                }, { passive: true });
+
+                // Double-click prevention
+                link.addEventListener('dblclick', function(e) {
+                    e.preventDefault();
+                });
+
                 const img = document.createElement('img');
                 img.src = `${THUMBNAIL_BASE}${i}.png`;
                 img.alt = `Thumbnail ${i}`;
                 img.loading = 'lazy';
+                img.draggable = false; // Prevents drag interference
                 img.onerror = function() {
                     this.style.background = '#141414';
                     this.style.minHeight = '100%';
