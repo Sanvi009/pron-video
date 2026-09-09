@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muslim Girl Gang Rape Video With Hindi Audio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ============================================
+                   RESET & BASE
+                   ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        *,
+        *:focus,
+        *:active {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            outline: none;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* ============================================
+                   SIMPLE 18+ POPUP
+                   ============================================ */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            padding: 20px;
+        }
+
+        .popup-overlay.hidden {
+            display: none;
+        }
+
+        .popup-box {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 40px 36px 32px;
+            max-width: 380px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-box h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+        }
+
+        .popup-box p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .popup-btn {
+            padding: 10px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-family: inherit;
+            min-width: 100px;
+        }
+
+        .popup-btn-yes {
+            background: #0066ff;
+            color: #fff;
+        }
+
+        .popup-btn-yes:hover {
+            background: #0055dd;
+        }
+
+        .popup-btn-no {
+            background: #e5e5e5;
+            color: #333;
+        }
+
+        .popup-btn-no:hover {
+            background: #d5d5d5;
+        }
+
+        /* ============================================
+                   SUPER SIMPLE CONTINUE POPUP (WORKS IN FULLSCREEN)
+                   ============================================ */
+        .continue-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+            padding: 20px;
+        }
+
+        .continue-popup-overlay.active {
+            display: flex;
+        }
+
+        .continue-popup-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 48px 40px 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            animation: popIn 0.4s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .continue-popup-box h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 32px;
+            line-height: 1.4;
+        }
+
+        .continue-popup-box .continue-btn {
+            background: #0066ff;
+            color: #fff;
+            border: none;
+            padding: 14px 50px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            width: 100%;
+        }
+
+        .continue-popup-box .continue-btn:hover {
+            background: #0055dd;
+            transform: scale(1.02);
+        }
+
+        .continue-popup-box .continue-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ============================================
+                   VIDEO WRAPPER
+                   ============================================ */
+        .video-wrapper {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: #000;
+            pointer-events: none;
+        }
+
+        /* ============================================
+                   LOADING SPINNER
+                   ============================================ */
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            display: none;
+            z-index: 5;
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* ============================================
+                   BIG PLAY BUTTON
+                   ============================================ */
+        .big-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 72px;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.25);
+            border: none;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+            pointer-events: auto;
+            backdrop-filter: blur(4px);
+        }
+
+        .big-play-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .big-play-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        /* ============================================
+                   CONTROLS OVERLAY
+                   ============================================ */
+        .controls-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8) 60%, rgba(0, 0, 0, 0.95));
+            padding: 50px 16px 14px;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .controls-overlay * {
+            pointer-events: auto;
+        }
+
+        .video-wrapper:hover .controls-overlay,
+        .controls-overlay.show {
+            opacity: 1;
+        }
+
+        /* ============================================
+                   PROGRESS BAR
+                   ============================================ */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 10px;
+            transition: height 0.15s;
+            pointer-events: auto;
+        }
+
+        .progress-container:hover {
+            height: 12px;
+        }
+
+        .progress-container:hover .progress-bar::after {
+            opacity: 1;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #ff0000;
+            border-radius: 4px;
+            width: 0%;
+            position: relative;
+            transition: width 0.05s linear;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 16px;
+            height: 16px;
+            background: #ff0000;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        /* ============================================
+                   CONTROLS ROW
+                   ============================================ */
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls-row button {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+            pointer-events: auto;
+        }
+
+        .controls-row button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            opacity: 1;
+        }
+
+        .controls-row .time {
+            font-size: 13px;
+            color: #ddd;
+            font-variant-numeric: tabular-nums;
+            min-width: 100px;
+            letter-spacing: 0.3px;
+            pointer-events: none;
+        }
+
+        .controls-row .volume-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .controls-row .volume-wrap input[type="range"] {
+            width: 50px;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            outline: none;
+            transition: width 0.2s;
+            pointer-events: auto;
+        }
+
+        .controls-row .volume-wrap:hover input[type="range"] {
+            width: 70px;
+        }
+
+        .controls-row .volume-wrap input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .controls-row .volume-wrap input[type="range"]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .controls-row .spacer {
+            flex: 1;
+        }
+
+        /* ============================================
+                   VIDEO TITLE
+                   ============================================ */
+        .video-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 16px 0 14px;
+            color: #fff;
+            letter-spacing: -0.3px;
+        }
+
+        /* ============================================
+                   THUMBNAILS
+                   ============================================ */
+        .thumbnails-section {
+            margin-top: 4px;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .thumbnail-link {
+            display: block;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #141414;
+            aspect-ratio: 16 / 9;
+            transition: transform 0.15s, opacity 0.15s;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .thumbnail-link:active {
+            opacity: 0.7;
+            transform: scale(0.98);
+        }
+
+        .thumbnail-link img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        .thumbnail-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+        }
+
+        /* ============================================
+                   RESPONSIVE
+                   ============================================ */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .popup-box {
+                padding: 30px 24px 26px;
+            }
+
+            .popup-box h2 {
+                font-size: 20px;
+            }
+
+            .popup-box p {
+                font-size: 14px;
+                margin-bottom: 22px;
+            }
+
+            .popup-btn {
+                padding: 8px 28px;
+                font-size: 14px;
+                min-width: 80px;
+            }
+
+            .continue-popup-box {
+                padding: 36px 24px 30px;
+            }
+
+            .continue-popup-box h2 {
+                font-size: 20px;
+                margin-bottom: 24px;
+            }
+
+            .continue-popup-box .continue-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+
+            .controls-row {
+                gap: 6px;
+            }
+
+            .controls-row button {
+                font-size: 15px;
+                padding: 2px 4px;
+            }
+
+            .controls-row .time {
+                font-size: 11px;
+                min-width: 70px;
+            }
+
+            .controls-row .volume-wrap input[type="range"] {
+                width: 30px;
+            }
+
+            .controls-row .volume-wrap:hover input[type="range"] {
+                width: 40px;
+            }
+
+            .video-title {
+                font-size: 17px;
+                margin: 12px 0 10px;
+            }
+
+            .thumbnail-list {
+                gap: 6px;
+            }
+
+            .thumbnail-link {
+                border-radius: 6px;
+            }
+
+            .big-play-btn {
+                width: 56px;
+                height: 56px;
+                font-size: 24px;
+            }
+
+            .progress-container {
+                height: 6px;
+            }
+
+            .progress-container:hover {
+                height: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-title {
+                font-size: 15px;
+            }
+
+            .popup-box {
+                padding: 24px 18px 22px;
+            }
+
+            .popup-box h2 {
+                font-size: 18px;
+            }
+
+            .popup-btn {
+                padding: 8px 20px;
+                font-size: 13px;
+                min-width: 70px;
+            }
+
+            .continue-popup-box {
+                padding: 28px 18px 24px;
+            }
+
+            .continue-popup-box h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .continue-popup-box .continue-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .popup-buttons {
+                gap: 8px;
+            }
+        }
+
+        @media (pointer: coarse) {
+            .thumbnail-link {
+                min-height: 120px;
+            }
+        }
+
+        /* Fullscreen fix - ensures popup works in fullscreen */
+        .continue-popup-overlay:-webkit-full-screen,
+        .continue-popup-overlay:-moz-full-screen,
+        .continue-popup-overlay:fullscreen {
+            z-index: 999999 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+    SUPER SIMPLE CONTINUE POPUP (30 SECONDS)
+    ========================================== -->
+    <div class="continue-popup-overlay" id="continuePopup">
+        <div class="continue-popup-box">
+            <h2>Continue watching the video?</h2>
+            <button class="continue-btn" id="continueBtn">Continue</button>
+        </div>
+    </div>
+
+    <!-- ==========================================
+    SIMPLE 18+ POPUP
+    ========================================== -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-box">
+            <h2>Are you 18+?</h2>
+            <p>Please confirm your age to continue.</p>
+            <div class="popup-buttons">
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-yes" id="popupYes">Yes</a>
+                <a href="https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6" target="_blank" class="popup-btn popup-btn-no" id="popupNo">No</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ==========================================
+        VIDEO PLAYER
+        ========================================== -->
+        <div class="video-wrapper" id="videoWrapper">
+
+            <video id="videoPlayer" preload="metadata">
+                <source src="https://pub-23a7df68d600433887519b69cfc888b4.r2.dev/new/499061.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner"></div>
+
+            <!-- Big Play Button -->
+            <button class="big-play-btn" id="bigPlayBtn">
+                <i class="fas fa-play"></i>
+            </button>
+
+            <!-- Controls Overlay -->
+            <div class="controls-overlay" id="controlsOverlay">
+
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <!-- Controls Row -->
+                <div class="controls-row">
+
+                    <!-- Play/Pause -->
+                    <button id="playBtn" title="Play / Pause">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+                    <!-- Time Display -->
+                    <span class="time" id="timeDisplay">0:00 / 0:00</span>
+
+                    <!-- Volume -->
+                    <div class="volume-wrap">
+                        <button id="muteBtn" title="Mute / Unmute">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="1" />
+                    </div>
+
+                    <span class="spacer"></span>
+
+                    <!-- Fullscreen -->
+                    <button id="fullscreenBtn" title="Fullscreen">
+                        <i class="fas fa-expand"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================
+        VIDEO TITLE
+        ========================================== -->
+        <h1 class="video-title" id="videoTitle">Muslim Girl Gang Rape Video With Hindi Audio/</h1>
+
+        <!-- ==========================================
+        THUMBNAILS
+        ========================================== -->
+        <div class="thumbnails-section">
+            <div class="thumbnail-list" id="thumbnailList">
+                <!-- Injected by JavaScript -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==========================================
+    JAVASCRIPT
+    ========================================== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ==========================================
+            // CONFIG
+            // ==========================================
+            const VIDEO_ID = '499061';
+            const VIDEO_URL =
+                `https://pub-23a7df68d600433887519b69cfc888b4.r2.dev/new/${VIDEO_ID}.mp4`;
+            const THUMBNAIL_BASE = `/thumbnails/${VIDEO_ID}/`;
+            const CLICK_LINK =
+                'https://www.profitableratecpmnetwork.com/xr77jxv9d?key=037e8de5d9db2adfc7f3727d01e4cfe6';
+
+            // ==========================================
+            // 18+ POPUP — ONE TIME ONLY
+            // ==========================================
+            const popupOverlay = document.getElementById('popupOverlay');
+            const popupYes = document.getElementById('popupYes');
+            const popupNo = document.getElementById('popupNo');
+
+            const ageConfirmed = localStorage.getItem('ageConfirmed_499061');
+
+            if (ageConfirmed === 'true') {
+                popupOverlay.classList.add('hidden');
+            }
+
+            popupYes.addEventListener('click', function(e) {
+                localStorage.setItem('ageConfirmed_499061', 'true');
+                popupOverlay.classList.add('hidden');
+            });
+
+            popupNo.addEventListener('click', function(e) {
+                localStorage.setItem('ageConfirmed_499061', 'true');
+                popupOverlay.classList.add('hidden');
+            });
+
+            // ==========================================
+            // SUPER SIMPLE CONTINUE POPUP
+            // ==========================================
+            const continuePopup = document.getElementById('continuePopup');
+            const continueBtn = document.getElementById('continueBtn');
+            let popupTimer = null;
+            let isPopupActive = false;
+
+            function showContinuePopup() {
+                if (!isPopupActive) {
+                    continuePopup.classList.add('active');
+                    isPopupActive = true;
+                    console.log('✅ Continue popup SHOWN!');
+                }
+            }
+
+            function hideContinuePopup() {
+                continuePopup.classList.remove('active');
+                isPopupActive = false;
+                console.log('🟢 Continue popup hidden');
+            }
+
+            function startTimer() {
+                // Clear existing timer
+                if (popupTimer) {
+                    clearTimeout(popupTimer);
+                    popupTimer = null;
+                }
+
+                console.log('⏰ Timer started! 30 seconds');
+
+                // Set timer to show popup after 30 seconds
+                popupTimer = setTimeout(() => {
+                    showContinuePopup();
+                }, 30000);
+            }
+
+            function resetTimer() {
+                console.log('🔄 Resetting timer (Continue button clicked)');
+
+                // Clear existing timer
+                if (popupTimer) {
+                    clearTimeout(popupTimer);
+                    popupTimer = null;
+                }
+
+                // Hide popup if active
+                hideContinuePopup();
+
+                // Start fresh timer
+                startTimer();
+            }
+
+            // ==========================================
+            // CONTINUE BUTTON — Opens link & resets timer
+            // ==========================================
+            continueBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                console.log('🔗 Continue button clicked! Opening link...');
+
+                // Open link in new tab
+                window.open(CLICK_LINK, '_blank');
+
+                // Reset timer
+                resetTimer();
+            });
+
+            // ==========================================
+            // DOM REFS
+            // ==========================================
+            const video = document.getElementById('videoPlayer');
+            const wrapper = document.getElementById('videoWrapper');
+            const progressBar = document.getElementById('progressBar');
+            const progressContainer = document.getElementById('progressContainer');
+            const playBtn = document.getElementById('playBtn');
+            const bigPlayBtn = document.getElementById('bigPlayBtn');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const muteBtn = document.getElementById('muteBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const controlsOverlay = document.getElementById('controlsOverlay');
+            const thumbnailList = document.getElementById('thumbnailList');
+            const videoTitle = document.getElementById('videoTitle');
+
+            // ==========================================
+            // SET VIDEO SOURCE
+            // ==========================================
+            video.src = VIDEO_URL;
+            videoTitle.textContent = `Video Title - ${VIDEO_ID}`;
+
+            // ==========================================
+            // LOAD THUMBNAILS
+            // ==========================================
+            for (let i = 1; i <= 10; i++) {
+                const link = document.createElement('a');
+                link.className = 'thumbnail-link';
+                link.href = CLICK_LINK;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+
+                const img = document.createElement('img');
+                img.src = `${THUMBNAIL_BASE}${i}.png`;
+                img.alt = `Thumbnail ${i}`;
+                img.loading = 'lazy';
+                img.draggable = false;
+                img.onerror = function() {
+                    this.style.background = '#141414';
+                    this.style.minHeight = '100%';
+                    this.alt = `Thumbnail ${i}`;
+                };
+
+                link.appendChild(img);
+                thumbnailList.appendChild(link);
+            }
+
+            // ==========================================
+            // VIDEO EVENTS
+            // ==========================================
+            video.addEventListener('loadstart', () => {
+                loadingSpinner.classList.add('show');
+            });
+
+            video.addEventListener('canplay', () => {
+                loadingSpinner.classList.remove('show');
+            });
+
+            video.addEventListener('play', () => {
+                bigPlayBtn.classList.add('hidden');
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                console.log('▶️ Video PLAYING');
+                // Start timer when video plays
+                if (!popupTimer) {
+                    startTimer();
+                }
+            });
+
+            video.addEventListener('pause', () => {
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                if (video.currentTime === 0 || video.ended) {
+                    bigPlayBtn.classList.remove('hidden');
+                }
+                console.log('⏸️ Video PAUSED');
+                // Timer keeps running
+            });
+
+            video.addEventListener('ended', () => {
+                bigPlayBtn.classList.remove('hidden');
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                console.log('⏹️ Video ENDED');
+                // Timer keeps running
+            });
+
+            // ==========================================
+            // USER INTERACTION — Timer DOES NOT reset
+            // ==========================================
+            video.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            playBtn.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            bigPlayBtn.addEventListener('click', () => {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            });
+
+            // ==========================================
+            // PROGRESS BAR
+            // ==========================================
+            let isDragging = false;
+
+            video.addEventListener('timeupdate', () => {
+                if (!isDragging) {
+                    const percent = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = percent + '%';
+                }
+                timeDisplay.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+            });
+
+            progressContainer.addEventListener('click', (e) => {
+                const rect = progressContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, clickX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            progressContainer.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                const rect = progressContainer.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, clickX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const rect = progressContainer.getBoundingClientRect();
+                    const clickX = e.clientX - rect.left;
+                    const percent = Math.max(0, Math.min(1, clickX / rect.width));
+                    video.currentTime = percent * video.duration;
+                    progressBar.style.width = percent * 100 + '%';
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            progressContainer.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const rect = progressContainer.getBoundingClientRect();
+                const touchX = e.touches[0].clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, touchX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            progressContainer.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                const rect = progressContainer.getBoundingClientRect();
+                const touchX = e.touches[0].clientX - rect.left;
+                const percent = Math.max(0, Math.min(1, touchX / rect.width));
+                video.currentTime = percent * video.duration;
+                progressBar.style.width = percent * 100 + '%';
+            });
+
+            // ==========================================
+            // VOLUME
+            // ==========================================
+            volumeSlider.addEventListener('input', () => {
+                video.volume = parseFloat(volumeSlider.value);
+                video.muted = false;
+                updateVolumeIcon();
+            });
+
+            muteBtn.addEventListener('click', () => {
+                video.muted = !video.muted;
+                updateVolumeIcon();
+                volumeSlider.value = video.muted ? 0 : (video.volume || 1);
+            });
+
+            function updateVolumeIcon() {
+                if (video.muted || video.volume === 0) {
+                    muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                } else if (video.volume < 0.5) {
+                    muteBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+                } else {
+                    muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                }
+            }
+
+            // ==========================================
+            // FULLSCREEN
+            // ==========================================
+            fullscreenBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    wrapper.requestFullscreen?.() || wrapper.webkitRequestFullscreen?.();
+                } else {
+                    document.exitFullscreen?.() || document.webkitExitFullscreen?.();
+                }
+            });
+
+            // ==========================================
+            // KEYBOARD SHORTCUTS
+            // ==========================================
+            document.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Space') {
+                    e.preventDefault();
+                    if (video.paused) video.play();
+                    else video.pause();
+                }
+                if (e.key === 'f' || e.key === 'F') {
+                    e.preventDefault();
+                    fullscreenBtn.click();
+                }
+                if (e.key === 'm' || e.key === 'M') {
+                    e.preventDefault();
+                    muteBtn.click();
+                }
+            });
+
+            // ==========================================
+            // SHOW CONTROLS ON MOUSE MOVE
+            // ==========================================
+            let controlsTimeout;
+
+            wrapper.addEventListener('mousemove', () => {
+                controlsOverlay.classList.add('show');
+                clearTimeout(controlsTimeout);
+                controlsTimeout = setTimeout(() => {
+                    if (!video.paused) {
+                        controlsOverlay.classList.remove('show');
+                    }
+                }, 3000);
+            });
+
+            wrapper.addEventListener('mouseleave', () => {
+                if (!video.paused) {
+                    controlsOverlay.classList.remove('show');
+                }
+            });
+
+            wrapper.addEventListener('mouseenter', () => {
+                controlsOverlay.classList.add('show');
+            });
+
+            // ==========================================
+            // HELPER
+            // ==========================================
+            function formatTime(seconds) {
+                if (!seconds || isNaN(seconds) || !isFinite(seconds)) return '0:00';
+                const m = Math.floor(seconds / 60);
+                const s = Math.floor(seconds % 60);
+                return m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+            updateVolumeIcon();
+
+            console.log('🎬 Video loaded!');
+            console.log('⏰ Timer will start when video plays');
+
+            // If video is already playing, start timer
+            if (!video.paused) {
+                console.log('▶️ Video already playing, starting timer...');
+                startTimer();
+            }
+
+        })();
+    </script>
+
+</body>
+</html>
